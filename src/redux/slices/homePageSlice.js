@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import userSlice from "./userSlice";
+import {baseUrl} from "../../utlis/api";
 const homePageSlice = createSlice({
     name : "homepage",
     initialState : {
@@ -111,7 +112,7 @@ const homePageSlice = createSlice({
 
 export const fetchData = createAsyncThunk("/hotelList",async() => {
     const token = localStorage.getItem("token")
-    const {data} = await axios.get("http://localhost:4000/hotels/all",
+    const {data} = await axios.get( baseUrl + "/hotels/all",
     {
         headers : {
             "Authorization" : "Bearer " + token
@@ -123,7 +124,7 @@ export const fetchData = createAsyncThunk("/hotelList",async() => {
 export const fetchHotelsByType = createAsyncThunk("/hotelListByType",async({name_id}) => {
    
     const token = localStorage.getItem("token")
-    const {data} = await axios.get(`http://localhost:4000/hotels/find`,
+    const {data} = await axios.get(`${baseUrl}/hotels/find`,
     {
         params: {
            type : name_id,
@@ -138,7 +139,7 @@ export const fetchHotelsByType = createAsyncThunk("/hotelListByType",async({name
 
 export const fetchRoom = createAsyncThunk("/room",async(hotelId) => {
     const token = localStorage.getItem("token")
-    const {data} = await axios.get("http://localhost:4000/hotels/room/"+hotelId,
+    const {data} = await axios.get( baseUrl + "/hotels/room/"+hotelId,
     {
         headers : {
             "Authorization" : "Bearer " + token
@@ -149,13 +150,13 @@ export const fetchRoom = createAsyncThunk("/room",async(hotelId) => {
 })
 
 export const addWishilist = createAsyncThunk("/addWishlist", async(room) => {
-   const {data}  = await axios.post("http://localhost:4000/wishlist/add",room) 
+   const {data}  = await axios.post(baseUrl + "/wishlist/add",room) 
    return data;
 })
 
 export const getWishList = createAsyncThunk("/getWishListByUserId",async({userId}) => {
     const token = localStorage.getItem("token")
-    const {data} = await axios.get("http://localhost:4000/wishlist/getUserWishList/"+ userId,
+    const {data} = await axios.get(baseUrl + "/wishlist/getUserWishList/"+ userId,
     {
         headers : {
             "Authorization" : "Bearer " + token
@@ -165,7 +166,7 @@ export const getWishList = createAsyncThunk("/getWishListByUserId",async({userId
 })
 
 export const addTrip = createAsyncThunk("/addTrip", async(tripdata) => {
-    const {data}  = await axios.post("http://localhost:4000/wishlist/add",tripdata) 
+    const {data}  = await axios.post(baseUrl + "/wishlist/add",tripdata) 
     return data;
 })
 
